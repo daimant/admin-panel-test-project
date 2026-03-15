@@ -14,13 +14,12 @@ import {
   Tooltip,
 } from "@mui/material";
 import EditIconModule from "@mui/icons-material/Edit";
-const EditIcon = (EditIconModule as any)?.default ?? EditIconModule;
 import ArrowUpwardIconModule from "@mui/icons-material/ArrowUpward";
-const ArrowUpwardIcon =
-  (ArrowUpwardIconModule as any)?.default ?? ArrowUpwardIconModule;
 import ArrowDownwardIconModule from "@mui/icons-material/ArrowDownward";
-const ArrowDownwardIcon =
-  (ArrowDownwardIconModule as any)?.default ?? ArrowDownwardIconModule;
+
+const ArrowDownwardIcon = (ArrowDownwardIconModule as any)?.default ?? ArrowDownwardIconModule;
+const EditIcon = (EditIconModule as any)?.default ?? EditIconModule;
+const ArrowUpwardIcon = (ArrowUpwardIconModule as any)?.default ?? ArrowUpwardIconModule;
 
 type SortOrder = "asc" | "desc";
 
@@ -32,19 +31,13 @@ interface Props {
   onEdit?: (product: Product) => void;
 }
 
-export default function ProductTable({
-  products,
-  onSort,
-  sortBy,
-  order = "asc",
-  onEdit,
-}: Props): JSX.Element {
+export default function ProductTable({ products, onSort, sortBy, order = "asc", onEdit, }: Props): JSX.Element {
   const renderSortIndicator = (field: string) => {
     if (sortBy !== field) return null;
     return order === "asc" ? (
-      <ArrowUpwardIcon fontSize="small" aria-hidden />
+      <ArrowUpwardIcon fontSize="small" aria-hidden/>
     ) : (
-      <ArrowDownwardIcon fontSize="small" aria-hidden />
+      <ArrowDownwardIcon fontSize="small" aria-hidden/>
     );
   };
 
@@ -190,7 +183,7 @@ export default function ProductTable({
                       size="small"
                       onClick={() => onEdit && onEdit(p)}
                     >
-                      <EditIcon fontSize="small" />
+                      <EditIcon fontSize="small"/>
                     </IconButton>
                   </Tooltip>
                 </TableCell>

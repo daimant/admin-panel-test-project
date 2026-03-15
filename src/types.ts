@@ -69,17 +69,3 @@ export type UpdateProductPayload = Partial<
     | "images"
   >
 >;
-
-export interface ApiError {
-  message: string;
-  status?: number;
-  code?: string;
-  details?: unknown;
-}
-
-export interface PaginatedResult<T> {
-  items: T[];
-  total: number;
-  skip: number;
-  limit: number;
-}

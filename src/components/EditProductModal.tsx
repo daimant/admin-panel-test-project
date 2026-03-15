@@ -1,13 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  Box,
-} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import type { Product } from "../types";
 
@@ -19,42 +11,21 @@ type FormValues = {
   description?: string;
 };
 
-export default function EditProductModal({
-  open,
-  product,
-  onClose,
-  onSave,
-}: {
+const defaultValues: FormValues = { title: "", price: "", brand: "", rating: "", description: "" }
+
+export default function EditProductModal({ open, product, onClose, onSave, }: {
   open: boolean;
   product: Product | null;
   onClose: () => void;
   onSave: (id: number, payload: Partial<Product>) => Promise<void>;
 }): JSX.Element {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    defaultValues: {
-      title: "",
-      price: "",
-      brand: "",
-      rating: "",
-      description: "",
-    },
+  const { register, handleSubmit, reset, setError, formState: { errors, isSubmitting } } = useForm<FormValues>({
+    defaultValues: { ...defaultValues },
   });
 
   useEffect(() => {
     if (!product) {
-      reset({
-        title: "",
-        price: "",
-        brand: "",
-        rating: "",
-        description: "",
-      });
+      reset({ ...defaultValues });
       return;
     }
 

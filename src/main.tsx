@@ -29,7 +29,7 @@ createRoot(container).render(
       <SnackbarProvider maxSnack={3} preventDuplicate>
         <AuthProvider>
           <BrowserRouter>
-            <App />
+            <App/>
           </BrowserRouter>
         </AuthProvider>
       </SnackbarProvider>

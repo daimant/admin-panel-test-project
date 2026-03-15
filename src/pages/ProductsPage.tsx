@@ -7,16 +7,7 @@ import {
   updateProduct as apiUpdateProduct,
 } from "../api/products";
 import type { Product, AddProductPayload } from "../types";
-import {
-  Box,
-  Typography,
-  Button,
-  TextField,
-  LinearProgress,
-  IconButton,
-  Tooltip,
-  Pagination,
-} from "@mui/material";
+import { Box, Typography, Button, TextField, LinearProgress, IconButton, Tooltip, Pagination } from "@mui/material";
 import AddProductModal from "../components/AddProductModal";
 import EditProductModal from "../components/EditProductModal";
 import ProductTable from "../components/ProductTable";
@@ -73,9 +64,7 @@ export default function ProductsPage(): JSX.Element {
   }, [searchInput]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(sortState));
-    } catch {}
+    localStorage.setItem(SORT_STORAGE_KEY, JSON.stringify(sortState));
   }, [sortState]);
 
   const productsQuery = useQuery(
@@ -168,7 +157,8 @@ export default function ProductsPage(): JSX.Element {
     try {
       logout();
       enqueueSnackbar("Logged out", { variant: "info" });
-    } catch {}
+    } catch {
+    }
     navigate("/login");
   }
 
@@ -189,7 +179,7 @@ export default function ProductsPage(): JSX.Element {
               onClick={handleRefresh}
               size="large"
             >
-              <RefreshIcon />
+              <RefreshIcon/>
             </IconButton>
           </Tooltip>
 
@@ -215,7 +205,7 @@ export default function ProductsPage(): JSX.Element {
       </Box>
 
       <Box className="table-container" mt={2}>
-        {productsQuery.isLoading && <LinearProgress />}
+        {productsQuery.isLoading && <LinearProgress/>}
 
         <ProductTable
           products={products}

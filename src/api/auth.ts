@@ -2,31 +2,14 @@ import axios, { AxiosInstance } from "axios";
 import type { AuthResponse, LoginPayload } from "../types";
 
 const BASE_URL = "";
+const api: AxiosInstance = axios.create({ baseURL: BASE_URL, withCredentials: true });
 
-const api: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  withCredentials: true,
-});
-
-export async function login(
-  username: string,
-  password: string,
-  expiresInMins = 60,
-): Promise<AuthResponse> {
+export async function login(username: string, password: string, expiresInMins = 60,): Promise<AuthResponse> {
   try {
     const payload: LoginPayload = { username, password, expiresInMins };
     const res = await api.post<AuthResponse>("/auth/login", payload);
-    try {
-      console.debug("[auth.login] response.data =", res.data);
-    } catch {}
     return res.data;
   } catch (err: unknown) {
-    try {
-      console.debug("[auth.login] error =", err);
-    } catch {}
     throw toApiError(err, "Failed to login");
   }
 }
@@ -35,14 +18,8 @@ export async function getCurrentUser(token?: string): Promise<AuthResponse> {
   try {
     const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
     const res = await api.get<AuthResponse>("/auth/me", { headers });
-    try {
-      console.debug("[auth.getCurrentUser] response.data =", res.data);
-    } catch {}
     return res.data;
-  } catch (err: unknown) {
-    try {
-      console.debug("[auth.getCurrentUser] error =", err);
-    } catch {}
+  } catch (err) {
     throw toApiError(err, "Failed to fetch current user");
   }
 }
@@ -52,9 +29,7 @@ export async function refreshSession(
   expiresInMins = 60,
 ): Promise<AuthResponse> {
   try {
-    const body: { refreshToken?: string; expiresInMins?: number } = {
-      expiresInMins,
-    };
+    const body: { refreshToken?: string; expiresInMins?: number } = { expiresInMins };
     if (refreshToken) body.refreshToken = refreshToken;
     const res = await api.post<AuthResponse>("/auth/refresh", body);
     return res.data;

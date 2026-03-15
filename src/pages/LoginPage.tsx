@@ -3,16 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {
-  Box,
-  TextField,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Typography,
-  Paper,
-  Alert,
-} from "@mui/material";
+import { Box, TextField, Button, Checkbox, FormControlLabel, Typography, Paper, Alert, } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import { useSnackbar } from "notistack";
 import { getCurrentUser } from "../api/auth";
@@ -39,9 +30,7 @@ export default function LoginPage(): JSX.Element {
 
   useEffect(() => {
     if (!isLoading && (token || user)) {
-      try {
-        justLoggedInRef.current = false;
-      } catch {}
+      justLoggedInRef.current = false;
       navigate("/products");
       return;
     }
@@ -70,13 +59,9 @@ export default function LoginPage(): JSX.Element {
         const me = await getCurrentUser();
         if (me) return me;
       } catch (err) {
-        try {
-          console.debug(
-            `[LoginPage] getCurrentUser retry ${i + 1} failed:`,
-            err,
-          );
-        } catch {}
+        console.debug(`[LoginPage] getCurrentUser retry ${i + 1} failed:`, err);
       }
+
       await wait(interval);
     }
     return null;
@@ -84,46 +69,18 @@ export default function LoginPage(): JSX.Element {
 
   async function onSubmit(data: FormValues) {
     setServerError(null);
+
     try {
-      try {
-        console.debug("[LoginPage] attempting login", {
-          username: data.username,
-          remember: data.remember,
-        });
-      } catch {}
-
-      try {
-        justLoggedInRef.current = true;
-      } catch {}
-
-      const res = await login(
-        data.username,
-        data.password,
-        Boolean(data.remember),
-      );
-
-      try {
-        console.debug("[LoginPage] login result:", res);
-      } catch {}
+      justLoggedInRef.current = true;
+      const res = await login(data.username, data.password, Boolean(data.remember),);
 
       if (res) {
-        try {
-          console.debug(
-            "[LoginPage] authentication successful, navigating to /products",
-          );
-        } catch {}
         navigate("/products");
         return;
       }
 
       const me = await tryResolveUser();
       if (me) {
-        try {
-          console.debug(
-            "[LoginPage] getCurrentUser succeeded after login, navigating to /products",
-            me,
-          );
-        } catch {}
         navigate("/products");
         return;
       }
@@ -142,9 +99,7 @@ export default function LoginPage(): JSX.Element {
         message: "Invalid credentials",
       });
       enqueueSnackbar(message, { variant: "error" });
-      try {
-        console.debug("[LoginPage] login error:", err);
-      } catch {}
+      console.debug("[LoginPage] login error:", err);
     }
   }
 
@@ -196,7 +151,7 @@ export default function LoginPage(): JSX.Element {
           mt={1}
         >
           <FormControlLabel
-            control={<Checkbox {...register("remember")} color="primary" />}
+            control={<Checkbox {...register("remember")} color="primary"/>}
             label="Remember me"
           />
 
