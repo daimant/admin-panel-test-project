@@ -158,8 +158,8 @@ export default function LoginPage(): JSX.Element {
               {...register("username")}
               error={Boolean(errors.username)}
               helperText={errors.username?.message}
+              inputProps={{ "aria-label": "username" }}
               InputProps={{
-                "aria-label": "username",
                 startAdornment: <img src={PersonIcon} alt="person"/>,
                 endAdornment: <img src={CrossIcon} alt="cross" className='pointer' onClick={clearUserInput}/>,
               }}
@@ -178,8 +178,8 @@ export default function LoginPage(): JSX.Element {
               {...register("password")}
               error={Boolean(errors.password)}
               helperText={errors.password?.message}
+              inputProps={{ "aria-label": "password" }}
               InputProps={{
-                "aria-label": "password",
                 startAdornment: <img src={LockIcon} alt="person"/>,
                 endAdornment: <img src={EyeIcon} alt="x" className='pointer' onClick={setPasswordInputTypeHandler}/>,
               }}

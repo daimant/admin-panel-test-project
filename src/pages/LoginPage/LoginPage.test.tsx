@@ -6,7 +6,7 @@ import LoginPage from "./LoginPage";
 
 let mockLogin = vi.fn();
 
-vi.mock("../context/AuthContext", () => {
+vi.mock("@/context/AuthContext", () => {
   return {
     useAuth: () => ({
       login: (...args: any[]) => mockLogin(...args),
@@ -24,7 +24,7 @@ describe("LoginPage", () => {
   it("shows validation errors when submitting empty form", async () => {
     render(
       <BrowserRouter>
-        <LoginPage />
+        <LoginPage/>
       </BrowserRouter>,
     );
 
@@ -44,14 +44,14 @@ describe("LoginPage", () => {
 
     render(
       <BrowserRouter>
-        <LoginPage />
+        <LoginPage/>
       </BrowserRouter>,
     );
 
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/password/i);
     const rememberCheckbox = screen.getByRole("checkbox", {
-      name: /remember me/i,
+      name: /запомнить данные/i,
     });
     const loginButton = screen.getByRole("button", { name: /login/i });
 
