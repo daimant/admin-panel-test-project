@@ -1,3 +1,4 @@
+import "./LoginPage.scss";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -7,13 +8,12 @@ import { Box, TextField, Button, Checkbox, FormControlLabel, Typography, Alert, 
 import { useAuth } from "@/context/AuthContext";
 import { useSnackbar } from "notistack";
 import { getCurrentUser } from "@/api/auth";
-import logoIcon from "@/assets/logoIcon.svg";
-import personIcon from "@/assets/personIcon.svg";
-import crossIcon from "@/assets/crossIcon.svg";
-import lockIcon from "@/assets/lockIcon.svg";
-import eyeIcon from "@/assets/eyeIcon.svg";
+import LogoIcon from "@/assets/icons/LogoIcon.svg";
+import PersonIcon from "@/assets/icons/PersonIcon.svg";
+import CrossIcon from "@/assets/icons/CrossIcon.svg";
+import LockIcon from "@/assets/icons/LockIcon.svg";
+import EyeIcon from "@/assets/icons/EyeIcon.svg";
 
-import "./LoginPage.scss";
 
 const schema = yup
   .object({
@@ -127,7 +127,7 @@ export default function LoginPage(): JSX.Element {
     <section className="login-container">
       <div className="login-inner">
         <Box className='logo-container'>
-          <img src={logoIcon} alt="Logo" width={68} height={74}/>
+          <img src={LogoIcon} alt="Logo" width={68} height={74}/>
         </Box>
 
         <Box className='flex-column'>
@@ -160,8 +160,8 @@ export default function LoginPage(): JSX.Element {
               helperText={errors.username?.message}
               InputProps={{
                 "aria-label": "username",
-                startAdornment: <img src={personIcon} alt="person"/>,
-                endAdornment: <img src={crossIcon} alt="cross" className='pointer' onClick={clearUserInput}/>,
+                startAdornment: <img src={PersonIcon} alt="person"/>,
+                endAdornment: <img src={CrossIcon} alt="cross" className='pointer' onClick={clearUserInput}/>,
               }}
             />
           </Box>
@@ -180,8 +180,8 @@ export default function LoginPage(): JSX.Element {
               helperText={errors.password?.message}
               InputProps={{
                 "aria-label": "password",
-                startAdornment: <img src={lockIcon} alt="person"/>,
-                endAdornment: <img src={eyeIcon} alt="x" className='pointer' onClick={setPasswordInputTypeHandler}/>,
+                startAdornment: <img src={LockIcon} alt="person"/>,
+                endAdornment: <img src={EyeIcon} alt="x" className='pointer' onClick={setPasswordInputTypeHandler}/>,
               }}
             />
           </Box>

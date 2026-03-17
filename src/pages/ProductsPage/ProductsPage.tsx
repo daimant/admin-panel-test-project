@@ -1,28 +1,38 @@
+import './ProductsPage.scss'
 import React, { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  addProduct as apiAddProduct,
   fetchProducts,
   searchProducts,
-  addProduct as apiAddProduct,
   updateProduct as apiUpdateProduct,
-} from "../api/products";
-import type { Product, AddProductPayload } from "../types";
-import { Box, Typography, Button, TextField, LinearProgress, IconButton, Tooltip, Pagination } from "@mui/material";
-import AddProductModal from "../components/AddProductModal";
-import EditProductModal from "../components/EditProductModal";
-import ProductTable from "../components/ProductTable";
+} from "../../api/products";
+import type { AddProductPayload, Product } from "@/types";
+import {
+  Box,
+  Button,
+  IconButton,
+  LinearProgress,
+  Pagination,
+  PaginationItem,
+  TextField,
+  Tooltip,
+  Typography
+} from "@mui/material";
+import AddProductModal from "../../components/AddProductModal";
+import EditProductModal from "../../components/EditProductModal";
+import ProductTable from "../../components/ProductTable";
 import { useSnackbar } from "notistack";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
-const RefreshIcon: React.FC = () => (
-  <span aria-hidden="true" style={{ fontSize: "1.2em" }}>
-    ⟳
-  </span>
-);
+import { RefreshIcon } from "@/assets/icons/RefreshIcon";
+import ScaleIcon from "@/assets/icons/ScaleIcon.svg";
+import CirclePlusIcon from "@/assets/icons/CirclePlusIcon.svg";
+import { ArrowLeftIcon } from "@/assets/icons/ArrowLeftIcon";
+import { ArrowRightIcon } from "@/assets/icons/ArrowRightIcon";
 
 const SORT_STORAGE_KEY = "admin_products_sort";
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 5;
 
 type SortState = {
   sortBy?: string;
@@ -74,17 +84,8 @@ export default function ProductsPage(): JSX.Element {
     ],
     async () => {
       const skip = (page - 1) * limit;
-      if (search) {
-        const res = await searchProducts(search, { limit, skip });
-        return res;
-      }
-      const res = await fetchProducts({
-        limit,
-        skip,
-        sortBy: sortState.sortBy,
-        order: sortState.order,
-      });
-      return res;
+      if (search) return await searchProducts(search, { limit, skip });
+      return await fetchProducts({ limit, skip, sortBy: sortState.sortBy, order: sortState.order });
     },
     {
       keepPreviousData: true,
@@ -163,48 +164,44 @@ export default function ProductsPage(): JSX.Element {
   }
 
   return (
-    <Box className="app-container">
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        gap={2}
-      >
-        <Typography variant="h4">Products</Typography>
+    <Box className="products-container">
+      <Box className='products-title-row'>
+        <Typography variant="h3" className='products-title'>Товары</Typography>
 
-        <Box display="flex" gap={1} alignItems="center">
+        <TextField
+          className="products-search"
+          placeholder="Найти"
+          size="small"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          InputProps={{ startAdornment: <img src={ScaleIcon} alt="search"/>, }}
+        />
+
+        <Button variant="outlined" onClick={handleLogout}>
+          Выйти
+        </Button>
+      </Box>
+
+      <Box className="products-controls-row">
+        <Typography variant="h4" className='products-table-title'>Все позиции</Typography>
+
+        <Box display='flex' gap={1}>
           <Tooltip title="Refresh list">
-            <IconButton
-              aria-label="refresh-products"
-              onClick={handleRefresh}
-              size="large"
-            >
+            <IconButton onClick={handleRefresh} className='products-refresh-button'>
               <RefreshIcon/>
             </IconButton>
           </Tooltip>
 
-          <Button variant="outlined" onClick={handleLogout}>
-            Logout
+          <Button variant="contained" onClick={() => setAddOpen(true)} className='products-add-button'>
+            <Box display='flex' gap={2}>
+              <img src={CirclePlusIcon} alt='CirclePlusIcon'/>
+              Добавить
+            </Box>
           </Button>
         </Box>
       </Box>
 
-      <Box className="controls-row" mt={2}>
-        <TextField
-          className="search"
-          label="Search products"
-          placeholder="Search by title, category, ... (uses API)"
-          size="small"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-
-        <Button variant="contained" onClick={() => setAddOpen(true)}>
-          Add
-        </Button>
-      </Box>
-
-      <Box className="table-container" mt={2}>
+      <Box className="products-table-container">
         {productsQuery.isLoading && <LinearProgress/>}
 
         <ProductTable
@@ -216,27 +213,26 @@ export default function ProductsPage(): JSX.Element {
         />
       </Box>
 
-      <Box
-        mt={2}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        gap={2}
-      >
-        <Typography variant="body2" color="textSecondary">
-          Showing {products.length > 0 ? (page - 1) * limit + 1 : 0} -
-          {products.length > 0 ? (page - 1) * limit + products.length : 0} of{" "}
+      <Box className='products-pagination'>
+        <Box className='products-pagination-info'>
+          <Typography component='span' color="var(--gray-color-7)">Показано</Typography>
+          {products.length > 0 ? (page - 1) * limit + 1 : 0}-
+          {products.length > 0 ? (page - 1) * limit + products.length : 0}
+          <Typography component='span' color="var(--gray-color-7)">из</Typography>
           {total}
-        </Typography>
+        </Box>
 
         <Pagination
           count={totalPages}
           page={page}
           onChange={(_e, value) => setPage(value)}
-          color="primary"
           shape="rounded"
-          showFirstButton
-          showLastButton
+          renderItem={(item) => (
+            <PaginationItem
+              slots={{ previous: ArrowLeftIcon, next: ArrowRightIcon }}
+              {...item}
+            />
+          )}
         />
       </Box>
 

@@ -3,12 +3,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
+  background: var(--white-color);
   padding: 6px;
   width: fit-content;
   height: fit-content;
   border-radius: 34px;
-  box-shadow: var(--surface-shadow);
+  box-shadow: 0 24px 32px 4px rgba(0, 0, 0, 0.04);
+  color: var(--font-color);
+
+  * {
+    font-family: "Inter", sans-serif !important;
+  }
 }
 
 .login-inner {
@@ -33,7 +38,7 @@
                     rgba(237, 237, 237, 1) 20%,
                     rgba(237, 237, 237, 0) 100%
     );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(white 0 0) content-box, linear-gradient(white 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
@@ -89,7 +94,7 @@
       }
 
       fieldset {
-        border: 1.5px solid #EDEDED;
+        border: 1.5px solid var(--gray-color-4);
       }
 
       .MuiInputBase-root {
@@ -100,14 +105,14 @@
 
     &-remember-me-block {
       margin: 4px 0;
-      color: var(--gray-2);
+      color: var(--gray-color-2);
       gap: 10px;
 
       :first-child & span {
         padding: 0;
 
         svg {
-          fill: var(--gray-2);
+          fill: var(--gray-color-2);
         }
       }
 
@@ -120,7 +125,7 @@
     &-submit-button {
       padding: 16px 0;
       font-size: 18px;
-      background: linear-gradient(180deg, rgba(#fff, 0) 0%, rgba(#fff, 0.12) 100%), var(--accent);
+      background: linear-gradient(180deg, rgba(white, 0) 0%, rgba(white, 0.12) 100%), var(--primary-color);
       box-shadow: none;
       border-radius: 12px;
       line-height: 1.2;
@@ -130,7 +135,6 @@
 
     &-or {
       position: relative;
-      padding: auto;
       line-height: 1.5;
       font-weight: 500;
       display: flex;
@@ -147,7 +151,7 @@
         content: "";
         height: 1px;
         width: 44%;
-        background: var(--gray-2);
+        background: var(--gray-color-2);
       }
 
       &::before {
@@ -166,14 +170,28 @@
       line-height: 1.5;
 
       label {
-        color: var(--gray-3);
+        color: var(--gray-color-3);
       }
 
       a {
-        color: var(--accent);
-        text-decoration-color: var(--accent);
+        color: var(--primary-color);
+        text-decoration-color: var(--primary-color);
         font-weight: 500;
       }
     }
+  }
+}
+
+.linear-gray-color {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.05));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gray-color-2);
+}
+
+@media (max-width: 720px) {
+  .login-container {
+    margin: 24px 16px;
+    padding: 20px;
   }
 }

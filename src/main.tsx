@@ -28,7 +28,7 @@ createRoot(container).render(
     <QueryClientProvider client={queryClient}>
       <SnackbarProvider maxSnack={3} preventDuplicate>
         <AuthProvider>
-          <BrowserRouter>
+          <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
             <App/>
           </BrowserRouter>
         </AuthProvider>

@@ -1,0 +1,220 @@
+.products-container {
+  background: var(--products-bg-color);
+  max-width: 1920px;
+  margin: 22px auto 0;
+  color: var(--font-color-2);
+
+  * {
+    font-family: Cairo, sans-serif !important;
+  }
+
+  .products {
+    &-title-row {
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 30px;
+      margin-bottom: 32.5px;
+    }
+
+    &-title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    &-search {
+      min-width: 200px;
+      width: 100%;
+      max-width: 1023px;
+      margin-inline: 16px;
+      background: var(--gray-color-5);
+      border-radius: 8px;
+
+      input {
+        height: 31px;
+      }
+
+      fieldset {
+        border: none;
+      }
+
+      .MuiInputBase-root {
+        padding-inline: 20px;
+        gap: 8px;
+      }
+    }
+
+    &-controls-row {
+      padding: 30px 30px 40px;
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-table-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    &-refresh-button {
+      border-radius: 8px;
+      border: 1px solid var(--gray-color-6);
+      padding: 9px;
+    }
+
+    &-add-button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      background: var(--primary-color);
+      color: var(--green-color);
+      text-transform: inherit;
+      line-height: 1.5;
+      box-shadow: none;
+    }
+
+    &-table-container {
+      .MuiTableContainer-root {
+        box-shadow: none;
+      }
+
+      .actions {
+        width: 120px;
+      }
+
+      .MuiTableCell-head {
+        p {
+          color: var(--gray-color-8) !important;
+          font-weight: 600 !important;
+          cursor: pointer;
+        }
+      }
+
+      .MuiTableCell-root {
+        padding: 12px 18px;
+        border-bottom: 2px solid var(--gray-color-5);
+      }
+
+      .MuiTableRow-root:hover {
+        background: rgba(16, 24, 40, 0.02);
+      }
+
+      .rating.low {
+        color: var(--danger-color);
+      }
+
+      .product-thumb {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      .bold-table-text {
+        color: black;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .product-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        span {
+          font-size: 14px;
+          color: var(--gray-color-8);
+        }
+      }
+
+      .open-sans-font {
+        font-family: Open Sans, sans-serif !important;
+      }
+
+      .roboto-font {
+        font-family: 'Roboto', sans-serif !important;
+      }
+
+      .product-add-button {
+        padding: 1.5px 14px;
+        background: var(--primary-color);
+        border-radius: 23px;
+        min-width: 52px;
+        height: 27px;
+      }
+    }
+
+    .modal-form .MuiTextField-root {
+      margin-top: 12px;
+    }
+
+    .snackbar-success {
+      background: var(--green-color-2) !important;
+    }
+
+    &-pagination {
+      background: white;
+      padding: 40px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+
+      &-info {
+        display: flex;
+        gap: 4px;
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif !important;
+
+        span {
+          font-size: 18px;
+        }
+      }
+
+      nav {
+        .Mui-selected {
+          background: var(--purpure-color);
+          color: white;
+        }
+
+        button {
+          border: 1px solid var(--gray-color-6);
+          color: var(--gray-color-8);
+        }
+
+        ul {
+          :last-child, :first-child {
+            button {
+              border: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 720px) {
+    .app-container {
+      padding: 16px;
+      margin: 12px auto;
+    }
+
+    .controls-row {
+      gap: 8px;
+    }
+
+    .controls-row .search {
+      flex-basis: 100%;
+    }
+
+    .MuiTableCell-root {
+      padding: 8px 12px;
+    }
+  }
+}
+

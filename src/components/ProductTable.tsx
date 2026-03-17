@@ -1,5 +1,5 @@
 import React from "react";
-import type { Product } from "../types";
+import type { Product } from "@/types";
 import {
   Table,
   TableBody,
@@ -11,14 +11,15 @@ import {
   IconButton,
   Typography,
   Box,
-  Tooltip,
+  Tooltip, Button,
 } from "@mui/material";
 import EditIconModule from "@mui/icons-material/Edit";
 import ArrowUpwardIconModule from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIconModule from "@mui/icons-material/ArrowDownward";
+import { CircleDotsIcon } from "@/assets/icons/CircleDotsIcon";
+import { PlusIcon } from "@/assets/icons/PlusIcon";
 
 const ArrowDownwardIcon = (ArrowDownwardIconModule as any)?.default ?? ArrowDownwardIconModule;
-const EditIcon = (EditIconModule as any)?.default ?? EditIconModule;
 const ArrowUpwardIcon = (ArrowUpwardIconModule as any)?.default ?? ArrowUpwardIconModule;
 
 type SortOrder = "asc" | "desc";
@@ -67,7 +68,7 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
               aria-label="Sort by title"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <Typography variant="subtitle2">Title</Typography>
+                <Typography>Наименование</Typography>
                 {renderSortIndicator("title")}
               </Box>
             </TableCell>
@@ -79,7 +80,7 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
               aria-label="Sort by vendor"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <Typography variant="subtitle2">Vendor</Typography>
+                <Typography>Вендор</Typography>
                 {renderSortIndicator("brand")}
               </Box>
             </TableCell>
@@ -91,20 +92,8 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
               aria-label="Sort by sku"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <Typography variant="subtitle2">SKU</Typography>
+                <Typography>Артикул</Typography>
                 {renderSortIndicator("id")}
-              </Box>
-            </TableCell>
-
-            <TableCell
-              onClick={() => handleHeaderClick("price")}
-              role="button"
-              tabIndex={0}
-              aria-label="Sort by price"
-            >
-              <Box display="flex" alignItems="center" gap={1}>
-                <Typography variant="subtitle2">Price</Typography>
-                {renderSortIndicator("price")}
               </Box>
             </TableCell>
 
@@ -115,14 +104,24 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
               aria-label="Sort by rating"
             >
               <Box display="flex" alignItems="center" gap={1}>
-                <Typography variant="subtitle2">Rating</Typography>
+                <Typography>Оценка</Typography>
                 {renderSortIndicator("rating")}
               </Box>
             </TableCell>
 
-            <TableCell align="center" aria-label="Actions">
-              <Typography variant="subtitle2">Actions</Typography>
+            <TableCell
+              onClick={() => handleHeaderClick("price")}
+              role="button"
+              tabIndex={0}
+              aria-label="Sort by price"
+            >
+              <Box display="flex" alignItems="center" gap={1}>
+                <Typography>Цена, ₽</Typography>
+                {renderSortIndicator("price")}
+              </Box>
             </TableCell>
+
+            <TableCell align="center" aria-label="Actions"></TableCell>
           </TableRow>
         </TableHead>
 
@@ -145,7 +144,7 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
                       />
                     ) : null}
                     <Box>
-                      <Typography variant="body1">{p.title}</Typography>
+                      <Typography className='bold-table-text'>{p.title}</Typography>
                       {p.category && (
                         <Typography variant="caption" color="textSecondary">
                           {p.category}
@@ -156,36 +155,42 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
                 </TableCell>
 
                 <TableCell>
-                  <Typography variant="body2">{p.brand ?? "-"}</Typography>
+                  <Typography className='bold-table-text open-sans-font'>{p.brand ?? "-"}</Typography>
                 </TableCell>
 
                 <TableCell>
-                  <Typography variant="body2">{p.id}</Typography>
+                  <Typography className='open-sans-font'>{p.id}</Typography>
                 </TableCell>
 
                 <TableCell>
-                  <Typography variant="body2">${p.price.toFixed(2)}</Typography>
+                  <Box display='flex'>
+                    <Typography className={`open-sans-font rating ${ratingLow ? "low" : ""}`}>{p.rating}</Typography>
+                    <Typography className='open-sans-font'>/5</Typography>
+                  </Box>
                 </TableCell>
 
                 <TableCell>
-                  <span
-                    className={`rating ${ratingLow ? "low" : ""}`}
-                    aria-live="polite"
-                  >
-                    {p.rating}
-                  </span>
+                  <Typography className='roboto-font'>${p.price.toFixed(2)}</Typography>
                 </TableCell>
 
                 <TableCell align="center" className="actions">
-                  <Tooltip title="Edit">
-                    <IconButton
-                      aria-label={`edit-product-${p.id}`}
-                      size="small"
-                      onClick={() => onEdit && onEdit(p)}
-                    >
-                      <EditIcon fontSize="small"/>
-                    </IconButton>
-                  </Tooltip>
+                  <Box display='flex' gap={4}>
+                    <Tooltip title="Add">
+                      <Button className='product-add-button'>
+                        <PlusIcon/>
+                      </Button>
+                    </Tooltip>
+
+                    <Tooltip title="Edit">
+                      <IconButton
+                        aria-label={`edit-product-${p.id}`}
+                        size="small"
+                        onClick={() => onEdit && onEdit(p)}
+                      >
+                        <CircleDotsIcon/>
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                 </TableCell>
               </TableRow>
             );

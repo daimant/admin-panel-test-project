@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import ProductsPage from "./pages/ProductsPage";
+import ProductsPage from "./pages/ProductsPage/ProductsPage";
 import { useAuth } from "./context/AuthContext";
 
 const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
