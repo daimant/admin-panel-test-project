@@ -13,11 +13,11 @@ import {
   Box,
   Tooltip, Button,
 } from "@mui/material";
-import EditIconModule from "@mui/icons-material/Edit";
 import ArrowUpwardIconModule from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIconModule from "@mui/icons-material/ArrowDownward";
 import { CircleDotsIcon } from "@/assets/icons/CircleDotsIcon";
 import { PlusIcon } from "@/assets/icons/PlusIcon";
+import MoneyTableCell from "@/components/MoneyTableCell";
 
 const ArrowDownwardIcon = (ArrowDownwardIconModule as any)?.default ?? ArrowDownwardIconModule;
 const ArrowUpwardIcon = (ArrowUpwardIconModule as any)?.default ?? ArrowUpwardIconModule;
@@ -35,11 +35,9 @@ interface Props {
 export default function ProductTable({ products, onSort, sortBy, order = "asc", onEdit, }: Props): JSX.Element {
   const renderSortIndicator = (field: string) => {
     if (sortBy !== field) return null;
-    return order === "asc" ? (
-      <ArrowUpwardIcon fontSize="small" aria-hidden/>
-    ) : (
-      <ArrowDownwardIcon fontSize="small" aria-hidden/>
-    );
+    return order === "asc"
+      ? <ArrowUpwardIcon fontSize="small" aria-hidden/>
+      : <ArrowDownwardIcon fontSize="small" aria-hidden/>
   };
 
   const handleHeaderClick = (field: string) => {
@@ -50,7 +48,7 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
     return (
       <Box role="status" p={2}>
         <Typography variant="body1" color="textSecondary">
-          No products found.
+          Не найдено ни одного продукта.
         </Typography>
       </Box>
     );
@@ -136,13 +134,9 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
                     alignItems="center"
                     className="product-cell"
                   >
-                    {p.thumbnail ? (
-                      <img
-                        src={p.thumbnail}
-                        alt={`${p.title} thumbnail`}
-                        className="product-thumb"
-                      />
-                    ) : null}
+                    {p.thumbnail
+                      ? <img src={p.thumbnail} alt={`${p.title} thumbnail`} className="product-thumb"/>
+                      : null}
                     <Box>
                       <Typography className='bold-table-text'>{p.title}</Typography>
                       {p.category && (
@@ -170,11 +164,11 @@ export default function ProductTable({ products, onSort, sortBy, order = "asc", 
                 </TableCell>
 
                 <TableCell>
-                  <Typography className='roboto-font'>${p.price.toFixed(2)}</Typography>
+                  <MoneyTableCell num={p.price}/>
                 </TableCell>
 
                 <TableCell align="center" className="actions">
-                  <Box display='flex' gap={4}>
+                  <Box display='flex' alignItems='center' gap={4}>
                     <Tooltip title="Add">
                       <Button className='product-add-button'>
                         <PlusIcon/>

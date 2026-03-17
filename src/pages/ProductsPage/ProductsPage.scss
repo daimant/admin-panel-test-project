@@ -90,6 +90,7 @@
           color: var(--gray-color-8) !important;
           font-weight: 600 !important;
           cursor: pointer;
+          white-space: nowrap;
         }
       }
 
@@ -138,6 +139,10 @@
 
       .roboto-font {
         font-family: 'Roboto', sans-serif !important;
+      }
+
+      .fractional-part {
+        color: var(--gray-color-10);
       }
 
       .product-add-button {
