@@ -20,7 +20,7 @@ export default function EditProductModal({ open, product, onClose, onSave, }: {
   onSave: (id: number, payload: Partial<Product>) => Promise<void>;
 }): JSX.Element {
   const { register, handleSubmit, reset, setError, formState: { errors, isSubmitting } } = useForm<FormValues>({
-    defaultValues: { ...defaultValues },
+    defaultValues: { ...defaultValues }
   });
 
   useEffect(() => {
